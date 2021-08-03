@@ -2055,6 +2055,13 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
 
   void deselectItem(int index, T value) {
     if (futureSearch) {
+      if (value is Map) {
+        if (widget.futureSelectedValues!
+            .any((element) => mapEquals(element, value))) {
+          widget.futureSelectedValues
+              ?.removeWhere((element) => mapEquals(element, value));
+        }
+      }
       widget.futureSelectedValues?.remove(value);
     } else {
       widget.selectedItems?.remove(index);
@@ -2094,6 +2101,10 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
   /// Returns whether an item is selected. Relies on index in case of non future list of items.
   bool isItemSelected(int index, T value) {
     if (futureSearch) {
+      if (value is Map) {
+        return (widget.futureSelectedValues!
+            .any((element) => mapEquals(element, value)));
+      }
       return (widget.futureSelectedValues!.contains(value));
     }
     return (widget.selectedItems?.contains(index) ?? false);
