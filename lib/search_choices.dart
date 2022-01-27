@@ -1227,7 +1227,7 @@ class _SearchChoicesState<T> extends State<SearchChoices<T>> {
         }
       }
     } else {
-      displayMenu.value = true;
+      displayMenu.value = !displayMenu.value;
     }
     if (mounted) {
       setState(() {});
